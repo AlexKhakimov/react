@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import { MaterialReactTable, type MRT_ColumnDef } from 'material-react-table';
-import { 
-  IconButton, 
-  Dialog, 
-  DialogTitle, 
-  DialogContent, 
-  DialogContentText, 
+import React, { useState } from "react";
+import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
+import {
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
   CircularProgress,
   Typography,
   Grid,
   Paper,
-  styled
-} from '@mui/material';
-import InfoIcon from '@mui/icons-material/Info';
-import { useGetSyncDataQuery } from '../store/api/syncApi';
+  styled,
+} from "@mui/material";
+import InfoIcon from "@mui/icons-material/Info";
+import { useGetSyncDataQuery } from "../store/api/syncApi";
 
 interface DataItem {
   id: string;
@@ -33,20 +33,27 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 }));
 
 const InfoLabel = styled(Typography)({
-  fontWeight: 'bold',
-  color: '#666',
+  fontWeight: "bold",
+  color: "#666",
 });
 
 const InfoValue = styled(Typography)({
-  marginLeft: '8px',
-  wordBreak: 'break-word',
+  marginLeft: "8px",
+  wordBreak: "break-word",
 });
 
-const SynchronizationTable: React.FC<SynchronizationTableProps> = ({ data, onInfoClick }) => {
+const SynchronizationTable: React.FC<SynchronizationTableProps> = ({
+  data,
+  onInfoClick,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedItemKey, setSelectedItemKey] = useState<string>('');
+  const [selectedItemKey, setSelectedItemKey] = useState<string>("");
 
-  const { data: apiData, isLoading, error } = useGetSyncDataQuery(selectedItemKey, {
+  const {
+    data: apiData,
+    isLoading,
+    error,
+  } = useGetSyncDataQuery(selectedItemKey, {
     skip: !isModalOpen,
   });
 
@@ -58,16 +65,16 @@ const SynchronizationTable: React.FC<SynchronizationTableProps> = ({ data, onInf
 
   const columns: MRT_ColumnDef<DataItem>[] = [
     {
-      accessorKey: 'id',
-      header: 'ID',
+      accessorKey: "id",
+      header: "ID",
     },
     {
-      accessorKey: 'name',
-      header: 'Наименование',
+      accessorKey: "name",
+      header: "Наименование 1",
     },
     {
-      accessorKey: 'action',
-      header: 'Действие',
+      accessorKey: "action",
+      header: "Действие",
       Cell: ({ row }) => (
         <IconButton
           onClick={() => handleInfoClick(row.original.id)}
@@ -91,7 +98,7 @@ const SynchronizationTable: React.FC<SynchronizationTableProps> = ({ data, onInf
         enableSorting={true}
         muiTableProps={{
           sx: {
-            tableLayout: 'fixed',
+            tableLayout: "fixed",
           },
         }}
       />
@@ -103,15 +110,15 @@ const SynchronizationTable: React.FC<SynchronizationTableProps> = ({ data, onInf
         maxWidth="md"
         fullWidth
       >
-        <DialogTitle id="info-dialog-title">
-          Детальная информация
-        </DialogTitle>
+        <DialogTitle id="info-dialog-title">Детальная информация</DialogTitle>
         <DialogContent>
           {isLoading ? (
             <CircularProgress />
           ) : error ? (
             <DialogContentText color="error">
-              {error instanceof Error ? error.message : 'Произошла ошибка при загрузке данных'}
+              {error instanceof Error
+                ? error.message
+                : "Произошла ошибка при загрузке данных"}
             </DialogContentText>
           ) : apiData ? (
             <Grid container spacing={2}>
@@ -122,16 +129,13 @@ const SynchronizationTable: React.FC<SynchronizationTableProps> = ({ data, onInf
                       <Grid item xs={12} key={key}>
                         <Grid container alignItems="center">
                           <Grid item>
-                            <InfoLabel variant="subtitle2">
-                              {key}:
-                            </InfoLabel>
+                            <InfoLabel variant="subtitle2">{key}:</InfoLabel>
                           </Grid>
                           <Grid item xs>
                             <InfoValue>
-                              {typeof value === 'object' 
+                              {typeof value === "object"
                                 ? JSON.stringify(value, null, 2)
-                                : String(value)
-                              }
+                                : String(value)}
                             </InfoValue>
                           </Grid>
                         </Grid>
