@@ -70,7 +70,7 @@ const SynchronizationTable: React.FC<SynchronizationTableProps> = ({
     },
     {
       accessorKey: "name",
-      header: "Наименование 2",
+      header: "Наименование",
     },
     {
       accessorKey: "action",
